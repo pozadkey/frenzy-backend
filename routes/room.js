@@ -16,9 +16,8 @@ router.get('/', (req, res)=>{
   }
 });
 
-
 // Create room route
-router.post('/createRoom', async (req, res) => {
+router.post('/create-room', async (req, res) => {
   const { username } = req.body;
 
   try {
@@ -39,7 +38,7 @@ router.post('/createRoom', async (req, res) => {
     req.io.emit('joinRoom', { roomId: room._id, player });
 
     // Send an HTTP response with the room data
-    return res.status(200).json({ error: 'Room created. Invite a player to join' });
+    return res.status(200).json({ message: 'Room created. Invite a player to join' });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'An error occurred' });
@@ -47,7 +46,7 @@ router.post('/createRoom', async (req, res) => {
 });
 
 // Join room route
-router.post('/joinRoom', async (req, res) => {
+router.post('/join-room', async (req, res) => {
   const { username, roomId } = req.body;
 
   try {
