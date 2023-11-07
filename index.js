@@ -29,8 +29,10 @@ app.use(express.json())
 // Routes
 app.use(routes, (req, res, next) => {
     req.io = io; // Pass the `io` object to the route
-    roomRoutes(req, res, next);
+    routes(req, res, next);
   });
+
+  app.use(routes)
 
 //Import DB config
 const InitiateMongoServer = require("./config/db");
