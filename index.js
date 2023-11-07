@@ -1,9 +1,14 @@
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
 const roomRoutes = require('./routes/room');
+require('dotenv').config();
 
 // Start express
 const app = express();
+
+// enable cors
+app.use(cors());
 
 //Port
 const port = process.env.PORT || 5000;
@@ -19,6 +24,9 @@ const Room = require('./models/room');
 //Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
+
+// Routes
+app.use(roomRoutes);
 
 //Import DB config
 const InitiateMongoServer = require("./config/db");
