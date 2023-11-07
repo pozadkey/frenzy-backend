@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const socketIoConfig = require('./config/socket-io-config');
-const roomRoutes = require('./routes/room');
+const roomRoutes = require('./routes');
 require('dotenv').config();
 
 // Start express
