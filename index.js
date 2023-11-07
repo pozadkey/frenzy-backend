@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const socketIoConfig = require('./config/socket-io-config');
-const roomRoutes = require('./routes');
+const routes = require('./routes');
 require('dotenv').config();
 
 // Start express
@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 // Routes
-app.use('/', (req, res, next) => {
+app.use(routes, (req, res, next) => {
     req.io = io; // Pass the `io` object to the route
     roomRoutes(req, res, next);
   });
