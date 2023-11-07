@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
+const socketIoConfig = require('./socket-io-config');
 const roomRoutes = require('./routes/room');
 require('dotenv').config();
 
@@ -16,7 +17,7 @@ const port = process.env.PORT || 5000;
 // Create server
 const server = http.createServer(app);
 
-const io = require('socket.io')(server);
+const io = socketIoConfig(server);
 
 // Import Room model
 const Room = require('./models/room');
@@ -26,7 +27,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 // Routes
-app.use(roomRoutes);
+app.use('/', (req, res, next) => {
+    req.io = io; // Pass the `io` object to the route
+    roomRoutes(req, res, next);
+  });
 
 //Import DB config
 const InitiateMongoServer = require("./config/db");
